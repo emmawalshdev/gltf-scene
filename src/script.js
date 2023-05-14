@@ -42,6 +42,7 @@ const environmentMap = cubeTextureLoader.load([
 ]);
 
 scene.background = environmentMap;
+scene.environmentMap = environmentMap
 
 debugObject.envMapIntensity = 5; // set envmapintensity of emty objec
 gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001) // add tweak for above
