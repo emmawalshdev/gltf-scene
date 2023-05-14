@@ -1,7 +1,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+// Loaders
+
+const gltfLoader = new GLTFLoader();
 /**
  * Base
  */
@@ -14,9 +18,21 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// models
+gltfLoader.load(
+    '/models/FlightHelmet/glTF/FlightHelmet.gltf',
+    (gltf) => {
+        scene.add(gltf.scene);
+        gltf.scene.scale.set(10,10,10);
+        gltf.scene.position.set(0,-4,0);
+        gltf.scene.rotation.y = Math.PI * 0.5;
+
+        gui.add(gltf.scene.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.001).name('rotation');
+    }
+)
 
 // light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
 directionalLight.position.set(0.25,3,-2.25);
 scene.add(directionalLight);
 /**
@@ -57,7 +73,8 @@ window.addEventListener('resize', () =>
 
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.physicallyCorrectLights = true;
 })
 
 /**
