@@ -41,6 +41,8 @@ const environmentMap = cubeTextureLoader.load([
     '/textures/environmentMaps/0/nz.jpg',
 ]);
 
+environmentMap.encoding = THREE.sRGBEncoding;
+
 scene.background = environmentMap;
 scene.environmentMap = environmentMap
 
@@ -100,7 +102,6 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.physicallyCorrectLights = true;
 })
 
 /**
@@ -123,7 +124,8 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+renderer.physicallyCorrectLights = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
 /**
  * Animate
  */
